@@ -34,8 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/actions/wrapper-validation@v4
-        with:
-          gradle-wrapper-path: android/gradle/wrapper/gradle-wrapper.properties
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
