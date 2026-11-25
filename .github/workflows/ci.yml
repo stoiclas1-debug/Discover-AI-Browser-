@@ -64,9 +64,12 @@ jobs:
       - run: set +o pipefail; yes | sdkmanager --licenses >/dev/null
       - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
       - uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_I_WANT_MY_TCG: "yes"
         with:
           api-level: 35
           target: google_apis
           arch: x86_64
           disable-animations: true
+          emulator-boot-timeout: 900
           script: ./gradlew -p android connectedDebugAndroidTest
