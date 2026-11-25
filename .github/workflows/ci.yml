@@ -46,7 +46,7 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
       - run: set +o pipefail; yes | sdkmanager --licenses >/dev/null
       - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
-      - run: ./gradlew -p android ktlintCheck testDebugUnitTest lint assembleDebug
+      - run: ./android/gradlew -p android ktlintCheck testDebugUnitTest lint assembleDebug
 
   android-emulator:
     name: Android emulator smoke test
@@ -72,4 +72,4 @@ jobs:
           arch: x86_64
           disable-animations: true
           emulator-boot-timeout: 900
-          script: ./gradlew -p android connectedDebugAndroidTest
+          script: ./android/gradlew -p android connectedDebugAndroidTest
