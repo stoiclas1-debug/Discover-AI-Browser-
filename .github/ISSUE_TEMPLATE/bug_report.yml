@@ -1,0 +1,36 @@
+name: Bug report
+description: Report a reproducible issue without including credentials or private browsing data.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include API keys, passwords, signing material, full browsing histories, or private page contents."
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect?
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      options: [Android, Backend API, Documentation, CI/security]
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction steps
+      description: Provide the smallest reproducible steps and sanitized logs.
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: App/commit and environment
+      description: Include app version or commit, Android/API level, or Node version as applicable.
+    validations:
+      required: true

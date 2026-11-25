@@ -1,0 +1,26 @@
+{
+  "name": "discover-ai-browser",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Workspace tooling for Discover AI Browser backend services.",
+  "engines": {
+    "node": ">=22.13 <23",
+    "npm": ">=10"
+  },
+  "workspaces": [
+    "backend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace @discover-ai/backend",
+    "dev": "npm run dev --workspace @discover-ai/backend",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "npm run lint --workspace @discover-ai/backend",
+    "typecheck": "npm run typecheck --workspace @discover-ai/backend",
+    "test": "npm test --workspace @discover-ai/backend",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build"
+  },
+  "devDependencies": {
+    "prettier": "3.10.1"
+  }
+}

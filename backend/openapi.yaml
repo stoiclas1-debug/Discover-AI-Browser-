@@ -1,0 +1,37 @@
+openapi: 3.1.0
+info:
+  title: Discover AI Browser API
+  version: 0.1.0
+  description: Phase 1 backend foundation. Product data and AI endpoints are not implemented.
+servers:
+  - url: http://localhost:3000
+    description: Local development
+paths:
+  /api/v1/health:
+    get:
+      operationId: getHealth
+      summary: Check API process health
+      description: Returns process health only; it does not verify database or provider availability.
+      responses:
+        "200":
+          description: Process is serving requests.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+              example:
+                status: ok
+                service: discover-ai-backend
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      additionalProperties: false
+      required: [status, service]
+      properties:
+        status:
+          type: string
+          const: ok
+        service:
+          type: string
+          const: discover-ai-backend
