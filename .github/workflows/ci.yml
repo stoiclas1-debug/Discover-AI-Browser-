@@ -41,6 +41,8 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: android-actions/setup-android@v3
+        with:
+          packages: ""
       - uses: gradle/actions/setup-gradle@v4
       - run: set +o pipefail; yes | sdkmanager --licenses >/dev/null
       - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
@@ -56,6 +58,8 @@ jobs:
           distribution: temurin
           java-version: "17"
       - uses: android-actions/setup-android@v3
+        with:
+          packages: ""
       - uses: gradle/actions/setup-gradle@v4
       - run: set +o pipefail; yes | sdkmanager --licenses >/dev/null
       - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
