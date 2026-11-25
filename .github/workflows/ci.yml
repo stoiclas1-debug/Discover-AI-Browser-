@@ -77,5 +77,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: android-emulator-smoke-logcat
-          path: android/app/build/emulator-smoke-logcat.txt
+          path: android/app/build/emulator-smoke-*.txt
           if-no-files-found: ignore

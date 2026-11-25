@@ -1,24 +1,40 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
-LOGCAT_PATH="android/app/build/emulator-smoke-logcat.txt"
+DIAGNOSTICS_DIR="android/app/build"
 
-capture_logcat() {
-  mkdir -p "$(dirname "$LOGCAT_PATH")"
-  adb logcat -d -t 3000 > "$LOGCAT_PATH" 2>&1 || true
+capture_diagnostics() {
+  mkdir -p "$DIAGNOSTICS_DIR"
+  adb shell dumpsys activity activities > "$DIAGNOSTICS_DIR/emulator-smoke-activities.txt" 2>&1 || true
+  adb logcat -d -t 3000 > "$DIAGNOSTICS_DIR/emulator-smoke-logcat.txt" 2>&1 || true
 }
 
-trap capture_logcat ERR
+trap capture_diagnostics ERR
 
 ./android/gradlew -p android installDebug
-adb shell am start -W -n com.discoveraibrowser/.MainActivity
-sleep 5
+adb shell am start -n com.discoveraibrowser/.MainActivity
+
+resumed_activity=""
+for attempt in {1..30}; do
+  resumed_activity="$(adb shell dumpsys activity activities | grep -E 'mResumedActivity|topResumedActivity' | grep -F 'com.discoveraibrowser/.MainActivity' || true)"
+  if [[ -n "$resumed_activity" ]]; then
+    break
+  fi
+  sleep 2
+done
+
+if [[ -z "$resumed_activity" ]]; then
+  capture_diagnostics
+  echo "Discover AI Browser MainActivity did not become the resumed activity." >&2
+  exit 1
+fi
 
 pid="$(adb shell pidof -s com.discoveraibrowser | tr -d '\r' || true)"
 if [[ -z "$pid" ]]; then
-  capture_logcat
+  capture_diagnostics
   echo "Discover AI Browser process exited after launch." >&2
   exit 1
 fi
 
-echo "Discover AI Browser launched and remained alive with PID $pid."
+echo "$resumed_activity"
+echo "Discover AI Browser MainActivity is resumed and the app process is alive with PID $pid."
