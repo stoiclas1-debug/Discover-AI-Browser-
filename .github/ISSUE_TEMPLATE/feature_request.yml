@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a focused feature with acceptance criteria and privacy considerations.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and user value
+      description: What user problem should this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance criteria
+      description: List observable behavior and important edge cases.
+    validations:
+      required: true
+  - type: dropdown
+    id: client
+    attributes:
+      label: Client or service
+      options:
+        [
+          Android (Phase 1),
+          Backend API,
+          Desktop/Electron (deferred),
+          iOS (deferred),
+          Browser extension (deferred),
+          Documentation,
+        ]
+    validations:
+      required: true
+  - type: textarea
+    id: privacy
+    attributes:
+      label: Data, privacy, and security implications
+      description: What data is accessed, sent, stored, or retained? Can the feature work locally?
+    validations:
+      required: true
